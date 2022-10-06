@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Feed</h1>
+    <% if (locals.message) { %>
+        <p style="color: green;"><%= locals.message %> </p>
+    <% } %> 
+    <a href="/profil">Profil</a>
+    
+    <% if (locals.success) { %> 
+        <% } %> 
+    <form action="/newpost" method="post">
+        <br>
+        <input type="text" name="title" placeholder="Titre">
+        <input type="text" name="text" placeholder="Texte">
+        <button type="submit">Poster</button>
+        <br>
+    </form>
+
+    <% let user = locals.myUsers %>
+    <% let post = locals.myPosts %> 
+    <% user.success.map(function(user) { %> 
+        <% post.success.reverse().map(function(post) { %> 
+        <% if (user.id == post.userId) {%> 
+            <% if (locals.myMe.success.id === post.userId) {%>
+                <form action="updatePost/<%= post.id %> " method="post">
+                    <div class="button">
+                        <button type="submit">Modifier</button>
+                        <input type="text" name="title" placeholder="Titre">
+                        <input type="text" name="text" placeholder="Texte">
+                    </div>
+                    <br>
+                </form>
+                <form action="/deletePost/<%= post.id %> "   method="post">
+                    <div class="button">
+                        <button type="submit">Supprimer</button>
+                    </div>
+                </form> 
+                <% } %> 
+                <ul style="list-style-type: none">
+                    <li><strong>Prénom : </strong> <%= user.firstname %></li>
+                    <li><strong>Titre : </strong> <%= post.title %></li>
+                    <li><strong>Texte : </strong> <%= post.text %></li><br>
+                </ul>
+            <% } %> 
+    <% }) %> 
+    <% }) %> 
+
+    
+</body>
+</html>
